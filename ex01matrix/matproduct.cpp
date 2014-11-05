@@ -1,12 +1,19 @@
+/*
+    Arkadiusz Gabrys
+    arkadiusz.gabrys@fau.de
+    qe83mepi
+
+    AdvPTEx
+*/
+
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <exception>
+#include <stdexcept>
 
 using std::cout;
 using std::cin;
 using std::endl;
-using std::exception;
 
 /*
     Matrix - can store double numbers.
@@ -26,7 +33,7 @@ public:
     Matrix(unsigned int _rowsCount, unsigned int _columnsCount, double defaultValue = 0.0) : rowsCount(_rowsCount), columsCount(_columnsCount)
     {
         if (rowsCount <= 0 || columsCount <= 0)
-            throw exception("Wrong matrix dimensions");
+            throw std::runtime_error("Wrong matrix dimensions");
 
         matrix = new double*[rowsCount];
         for (unsigned int i = 0; i < rowsCount; i++)
@@ -40,7 +47,7 @@ public:
     /*
         Copy constructor
     */
-    Matrix(Matrix& m) : rowsCount(m.rowsCount), columsCount(m.columsCount)
+    Matrix(Matrix const & m) : rowsCount(m.rowsCount), columsCount(m.columsCount)
     {
         matrix = new double*[rowsCount];
         for (unsigned int i = 0; i < rowsCount; i++)
@@ -70,7 +77,7 @@ public:
     /*
         Access opeartor
     */
-    double* operator[](unsigned int row) { return matrix[row]; }
+    double* operator[](unsigned int row) const { return matrix[row]; }
 
     /*
         Assign operator
@@ -97,11 +104,11 @@ public:
     /*
         Multiplication operator
     */
-    Matrix operator*(Matrix& m)
+    Matrix operator*(Matrix m)
     {
         // number of columns of the first matrix must be equal to the number of rows of the second one
         if (columsCount != m.getRowsCount())
-            throw exception("Matrices can not be multiplied. Number of collumns of the first matrix must be equla to number of rows of the second one!");
+            throw std::runtime_error("Matrices can not be multiplied. Number of collumns of the first matrix must be equla to number of rows of the second one!");
 
         // create new matrix
         Matrix result(rowsCount, m.getColumnsCount());
@@ -171,5 +178,5 @@ int main(int argv, char* argc[])
     cout << "m3 = m1 * m2" << endl;
     writeMatrix(m3);
 
-    return EXIT_SUCCESS;
+    return 0;
 }
