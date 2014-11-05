@@ -160,23 +160,31 @@ int main(int argv, char* argc[])
     cout << "s3: "; cin >> s3;
 
     // create and fill two matrixes
-    Matrix m1(s1, s2);
-    Matrix m2(s2, s3);
+    try
+    {
+        Matrix m1(s1, s2);
+        Matrix m2(s2, s3);
 
-    cout << endl;
-    cout << "m1[" << s1 << "][" << s2 << "]" << endl << endl;
-    fillMatrix(m1);
+        cout << endl;
+        cout << "m1[" << s1 << "][" << s2 << "]" << endl << endl;
+        fillMatrix(m1);
 
-    cout << endl;
-    cout << "m2[" << s1 << "][" << s2 << "]:" << endl << endl;
-    fillMatrix(m2);
-    // ----------------------------
+        cout << endl;
+        cout << "m2[" << s1 << "][" << s2 << "]:" << endl << endl;
+        fillMatrix(m2);
+        // ----------------------------
 
-    Matrix m3 = m1 * m2; // multiply two matrices to obtain third one
+        Matrix m3 = m1 * m2; // multiply two matrices to obtain third one
 
-    // show the result
-    cout << "m3 = m1 * m2" << endl;
-    writeMatrix(m3);
+        // show the result
+        cout << "m3 = m1 * m2" << endl;
+        writeMatrix(m3);
+    }
+    catch (std::runtime_error e)
+    {
+        cout << " ! Error: " << e.what() << endl;
+        return 1;
+    }
 
     return 0;
 }
