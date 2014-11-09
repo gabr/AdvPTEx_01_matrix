@@ -129,8 +129,28 @@ public:
 };
 
 // geting user input
-template <class Type>
-void getInput(string prompt, Type& value)
+void getDimension(string prompt, int& value)
+{
+    double tmp = 0.0;
+
+    cin.clear();
+    do
+    {
+        cout << prompt;
+        cin >> tmp;
+
+        // check for fraction
+        value = static_cast<int>(tmp);
+        if (cin.good() && tmp > 0 && (value - tmp) == 0)
+            break;
+
+        cin.clear();
+        cin.ignore();
+        cout << " ! Error: wrong input!\n";
+    } while (true);
+}
+
+void getInput(string prompt, double& value)
 {
     cin.clear();
     do
@@ -155,7 +175,7 @@ void fillMatrix(Matrix& m)
         {
             stringstream prompt;
             prompt << "[" << r << "][" << c << "]: ";
-            getInput<double>(prompt.str(), m[r][c]);
+            getInput(prompt.str(), m[r][c]);
         }
         cout << endl;
     }
@@ -176,9 +196,9 @@ int main(int argv, char* argc[])
 {
     int s1, s2, s3; // for matrix dimensions
     
-    getInput<int>("s1: ", s1);
-    getInput<int>("s2: ", s2);
-    getInput<int>("s3: ", s3);
+    getDimension("s1: ", s1);
+    getDimension("s2: ", s2);
+    getDimension("s3: ", s3);
 
     // create and fill two matrixes
     try
