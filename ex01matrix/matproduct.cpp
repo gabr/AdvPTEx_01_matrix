@@ -14,6 +14,8 @@
 using std::cout;
 using std::cin;
 using std::endl;
+using std::string;
+using std::stringstream;
 
 /*
     Matrix - can store double numbers.
@@ -126,6 +128,24 @@ public:
     }
 };
 
+// geting user input
+template <class Type>
+void getInput(string prompt, Type& value)
+{
+    cin.clear();
+    do
+    {
+        cout << prompt;
+        cin >> value;
+        if (cin.good())
+            return;
+
+        cin.clear();
+        cin.ignore();
+        cout << " ! Error: wrong input type!\n";
+    } while (true);
+}
+
 // filling matrix with data
 void fillMatrix(Matrix& m)
 {
@@ -133,8 +153,9 @@ void fillMatrix(Matrix& m)
     {
         for (unsigned int c = 0; c < m.getColumnsCount(); c++)
         {
-            cout << "[" << r << "][" << c << "]: ";
-            cin >> m[r][c];
+            stringstream prompt;
+            prompt << "[" << r << "][" << c << "]: ";
+            getInput<double>(prompt.str(), m[r][c]);
         }
         cout << endl;
     }
@@ -155,9 +176,9 @@ int main(int argv, char* argc[])
 {
     int s1, s2, s3; // for matrix dimensions
     
-    cout << "s1: "; cin >> s1;
-    cout << "s2: "; cin >> s2;
-    cout << "s3: "; cin >> s3;
+    getInput<int>("s1: ", s1);
+    getInput<int>("s2: ", s2);
+    getInput<int>("s3: ", s3);
 
     // create and fill two matrixes
     try
